@@ -4,22 +4,12 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import Borabit from "../screens/Borabit";
 import Bithum from "../screens/Bithum";
 import Upbit from "../screens/Upbit";
+import Home from "../screens/Home"
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { AntDesign } from '@expo/vector-icons';
 import { useLayoutEffect } from "react";
 
 const Tabs = createBottomTabNavigator();
-
-// const getHeaderName = (route) => {
-//   return route?.state?.routeNames[route?.state?.index] || "Borabit";
-// };
-
-// export default ({ navigation, route }) => {
-//   useLayoutEffect(() => {
-//     navigation.setOptions({
-//       title: getHeaderName(route),
-//     });
-//   }, [route]);
 
 export default ({ navigation, route }) => {
   // console.log(route?.state?.routeNames)
@@ -35,8 +25,8 @@ export default ({ navigation, route }) => {
           console.log(route.name);
           if (route.name === "Borabit") {
             return (
-              <FontAwesome5
-                name="bitcoin"
+              <MaterialCommunityIcons
+                name="qrcode"
                 size={28}
                 color={focused ? "white" : "grey"}
               />
@@ -44,15 +34,24 @@ export default ({ navigation, route }) => {
           } else if (route.name === "Bithum") {
             return (
               <MaterialCommunityIcons
-                name="alpha-b-circle-outline"
+                name="qrcode-scan"
                 size={28}
                 color={focused ? "white" : "grey"}
               />
             );
           } else if (route.name === "Upbit") {
             return (
-              <MaterialCommunityIcons
-                name="alpha-u-circle-outline"
+              <AntDesign
+                name="setting"
+                size={28}
+                color={focused ? "white" : "grey"}
+              />
+            );
+          }
+          else if (route.name === "Home") {
+            return (
+              <AntDesign
+                name="home"
                 size={28}
                 color={focused ? "white" : "grey"}
               />
@@ -66,6 +65,7 @@ export default ({ navigation, route }) => {
           backgroundColor: "#5234bf",
         },
       }}>
+      <Tabs.Screen name="Home" component={Home}></Tabs.Screen>
       <Tabs.Screen name="Borabit" component={Borabit}></Tabs.Screen>
       <Tabs.Screen name="Bithum" component={Bithum}></Tabs.Screen>
       <Tabs.Screen name="Upbit" component={Upbit}></Tabs.Screen>

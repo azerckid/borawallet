@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 export default ({ navigation }) => {
   return (
     <View style={{ backgroundColor: "white" }}>
-      <Text>Borabit</Text>
+      <Text>home</Text>
       <View
         style={{
           flexDirection: "row",
@@ -24,7 +24,12 @@ export default ({ navigation }) => {
           marginTop: 20,
         }}
       >
-       
+        <Text
+          onPress={() => navigation.navigate("Search")}
+          style={styles.titleText}
+        >
+          Search
+        </Text>
       </View>
     </View>
   );
