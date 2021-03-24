@@ -1,20 +1,20 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-import QRgen from "../screens/QRgen";
-import Bithum from "../screens/Bithum";
-import Upbit from "../screens/Upbit";
-import Home from "../screens/Home";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useLayoutEffect } from "react";
+import QRgen from "../screens/QRgen";
+import QRscan from "../screens/QRscan";
+import Upbit from "../screens/Upbit";
+import Home from "../screens/Home";
 
 const Tabs = createBottomTabNavigator();
 
 export default ({ navigation, route }) => {
   // console.log(route?.state?.routeNames)
   useLayoutEffect(() => {
-    const routeName = getFocusedRouteNameFromRoute(route) ?? "Borabit";
+    const routeName = getFocusedRouteNameFromRoute(route) ?? "Home";
     navigation.setOptions({ title: routeName });
   }, [route]);
 
@@ -22,8 +22,7 @@ export default ({ navigation, route }) => {
     <Tabs.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
-          console.log(route.name);
-          if (route.name === "QRgen") {
+          if (route.name === "QR Code Generator") {
             return (
               <MaterialCommunityIcons
                 name="qrcode"
@@ -31,7 +30,7 @@ export default ({ navigation, route }) => {
                 color={focused ? "white" : "grey"}
               />
             );
-          } else if (route.name === "Bithum") {
+          } else if (route.name === "QR Code Scan") {
             return (
               <MaterialCommunityIcons
                 name="qrcode-scan"
@@ -39,7 +38,7 @@ export default ({ navigation, route }) => {
                 color={focused ? "white" : "grey"}
               />
             );
-          } else if (route.name === "Upbit") {
+          } else if (route.name === "Setting") {
             return (
               <AntDesign
                 name="setting"
@@ -65,9 +64,9 @@ export default ({ navigation, route }) => {
         },
       }}>
       <Tabs.Screen name="Home" component={Home}></Tabs.Screen>
-      <Tabs.Screen name="QRgen" component={QRgen}></Tabs.Screen>
-      <Tabs.Screen name="Bithum" component={Bithum}></Tabs.Screen>
-      <Tabs.Screen name="Upbit" component={Upbit}></Tabs.Screen>
+      <Tabs.Screen name="QR Code Generator" component={QRgen}></Tabs.Screen>
+      <Tabs.Screen name="QR Code Scan" component={QRscan}></Tabs.Screen>
+      <Tabs.Screen name="Setting" component={Upbit}></Tabs.Screen>
     </Tabs.Navigator>
   );
 };
