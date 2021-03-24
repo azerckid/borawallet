@@ -1,12 +1,12 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-import Borabit from "../screens/Borabit";
+import QRgen from "../screens/QRgen";
 import Bithum from "../screens/Bithum";
 import Upbit from "../screens/Upbit";
-import Home from "../screens/Home"
+import Home from "../screens/Home";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
 import { useLayoutEffect } from "react";
 
 const Tabs = createBottomTabNavigator();
@@ -23,7 +23,7 @@ export default ({ navigation, route }) => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
           console.log(route.name);
-          if (route.name === "Borabit") {
+          if (route.name === "QRgen") {
             return (
               <MaterialCommunityIcons
                 name="qrcode"
@@ -47,8 +47,7 @@ export default ({ navigation, route }) => {
                 color={focused ? "white" : "grey"}
               />
             );
-          }
-          else if (route.name === "Home") {
+          } else if (route.name === "Home") {
             return (
               <AntDesign
                 name="home"
@@ -66,7 +65,7 @@ export default ({ navigation, route }) => {
         },
       }}>
       <Tabs.Screen name="Home" component={Home}></Tabs.Screen>
-      <Tabs.Screen name="Borabit" component={Borabit}></Tabs.Screen>
+      <Tabs.Screen name="QRgen" component={QRgen}></Tabs.Screen>
       <Tabs.Screen name="Bithum" component={Bithum}></Tabs.Screen>
       <Tabs.Screen name="Upbit" component={Upbit}></Tabs.Screen>
     </Tabs.Navigator>

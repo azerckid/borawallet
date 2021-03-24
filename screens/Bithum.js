@@ -3,6 +3,6 @@ import { View, Text } from "react-native";
 
 export default ({ navigation }) => (
   <View>
-    <Text>Bithum</Text>
+    <Text>Bithummmmmmm</Text>
   </View>
 );

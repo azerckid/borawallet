@@ -22,12 +22,10 @@ export default ({ navigation }) => {
           flexDirection: "row",
           justifyContent: "space-around",
           marginTop: 20,
-        }}
-      >
+        }}>
         <Text
           onPress={() => navigation.navigate("Search")}
-          style={styles.titleText}
-        >
+          style={styles.titleText}>
           Search
         </Text>
       </View>
