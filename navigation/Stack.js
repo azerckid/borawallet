@@ -24,8 +24,8 @@ export default () => (
       headerBackTitleVisible: false,
       gestureEnabled: true,
     }}>
-    <Stack.Screen name="SignIn" component={SigninScreen}></Stack.Screen>
-    <Stack.Screen name="SignUp" component={SignupScreen}></Stack.Screen>
+    {/* <Stack.Screen name="SignIn" component={SigninScreen}></Stack.Screen>
+    <Stack.Screen name="SignUp" component={SignupScreen}></Stack.Screen> */}
     <Stack.Screen name="Tabs" component={Tabs}></Stack.Screen>
     <Stack.Screen name="Search" component={Search}></Stack.Screen>
   </Stack.Navigator>

@@ -15,6 +15,13 @@ function QRscan() {
   const [scanned, setScanned] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [scandata, setScandata] = useState("")
+  
+  const char = scandata.split('|')
+  const add = char[0]
+  const num = char[1]
+
+
+  
 
   useEffect(() => {
     (async () => {
@@ -68,9 +75,11 @@ function QRscan() {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
+             
               <Text style={styles.modalText}> 아래 주소로 송금하시겠습니까? </Text>
-              <Text style={styles.modalText}>{scandata}</Text>
-              <Text style={styles.modalText}>금액 얼마얼마</Text>
+              <Text style={styles.modalText}>{char[0]}</Text>
+              <Text style={styles.modalText}> 보내는 금액 </Text>
+              <Text style={styles.modalText}>{char[1]}</Text>
               <TouchableHighlight
                 style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
                 onPress={() => {
