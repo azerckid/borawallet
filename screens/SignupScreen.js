@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { TouchableOpacity } from "react-native";
-import { Button, Input, Text } from "react-native-elements";
+import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { Input, Text } from "react-native-elements";
 import firebase from "../firebase/fire";
 
 const SignupScreen = ({ navigation }) => {
@@ -18,22 +18,86 @@ const SignupScreen = ({ navigation }) => {
       setError(err.message);
     }
   };
+
   return (
-    <>
-      <Input label="Email" value={email} onChangeText={setEmail} />
+    <View style={styles.container}>
+      <Image style={styles.logo} source={require("../assets/ddmcoin.png")} />
       <Input
-        label="Password"
+        // label="Email"
+        value={email}
+        placeholder="email"
+        onChangeText={setEmail}
+        style={{
+          // backgroundColor: "#e3e3e3",
+          // borderRadius: 30,
+          paddingLeft: 10,
+        }}
+      />
+      <Input
+        // label="Password"
         value={password}
+        placeholder="password"
         onChangeText={setPassword}
         secureTextEntry
+        style={{
+          // backgroundColor: "#e3e3e3",
+          // borderRadius: 30,
+          paddingLeft: 10,
+        }}
       />
+
       {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
-      <Button title="SignUp" onPress={() => signUp()} />
-      <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
-        <Text>Already have an account? Sign In</Text>
+
+      <TouchableOpacity onPress={() => signUp()}>
+        <Text style={styles.button}>Sign Up</Text>
       </TouchableOpacity>
-    </>
+      <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+        <Text style={styles.message}>Already have an account? Sign In</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+  },
+  button: {
+    marginTop: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+    width: 300,
+    backgroundColor: "#4d97ff",
+    color: "#ffffff",
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  message: {
+    marginTop: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+    width: 300,
+    backgroundColor: "#e3e3e3",
+    color: "#b0b0b0",
+    textAlign: "center",
+    fontSize: 14,
+    marginBottom: 50,
+  },
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    marginBottom: 70,
+  },
+});
 
 export default SignupScreen;
