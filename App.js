@@ -25,7 +25,7 @@ export default function App() {
   const loadAssets = () => {
     const images = cacheImages([
       "https://kavenyou.com/wp-content/uploads/2019/03/eyestyling-blackpink-choosing-colored-contact-lens.png",
-      require("./assets/splash.png"),
+      require("./assets/ddmcoin.png"),
     ]);
     const fonts = cachFonts([Ionicons.font]);
     return Promise.all([...images, ...fonts]);
@@ -42,7 +42,6 @@ export default function App() {
     <AppLoading
       startAsync={loadAssets}
       onFinish={onFinish}
-      onError={console.warn}
-    ></AppLoading>
+      onError={console.warn}></AppLoading>
   );
 }

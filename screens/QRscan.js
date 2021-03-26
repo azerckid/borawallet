@@ -1,6 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import React, { useState, useEffect } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Button,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+import { BarCodeScanner } from "expo-barcode-scanner";
 
 function QRscan() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -9,7 +16,7 @@ function QRscan() {
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, []);
 
@@ -27,11 +34,23 @@ function QRscan() {
 
   return (
     <View style={styles.container}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      <View
+        style={{
+          width: Dimensions.get("screen").width,
+          height: Dimensions.get("screen").height,
+          margin: -80,
+        }}>
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={StyleSheet.absoluteFillObject}></BarCodeScanner>
+        {scanned && (
+          <TouchableOpacity
+            onPress={() => setScanned(false)}
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <Text style={styles.button}>Tap to Scan Again</Text>
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 }
@@ -39,15 +58,27 @@ function QRscan() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    alignItems: "center",
+    justifyContent: "flex-start",
+    backgroundColor: "#fff",
   },
   barCodeView: {
-    width: '100%', 
-    height: '50%', 
-    marginBottom: 40
+    width: "100%",
+    height: "100%",
+    marginBottom: 40,
+  },
+  button: {
+    marginTop: 400,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+    width: 300,
+    backgroundColor: "#ff8ac2",
+    color: "#ffffff",
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 
-export default QRscan
+export default QRscan;
