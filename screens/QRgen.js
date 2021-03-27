@@ -5,7 +5,7 @@ import QRCode from "react-native-qrcode-svg";
 import firebase from "../firebase/fire";
 
 const QRgen = ({ navigation }) => {
-  const [text, setText] = useState(0);
+  const [text, setText] = useState();
   const [error, setError] = useState("");
   const address = "0x9C2D26b8889348ca869D9e9F6298D11bbA88876B"
   

@@ -27,6 +27,26 @@ function QRscan() {
     })();
   }, []);
 
+  const sendData = async() => {
+    try{
+      await fetch("https://webhook.site/bfef764a-08c9-4678-b1bb-67458dbebc1d",{
+        method:"post",
+        mode:"no-cors",
+        Headers:{
+          "Accept":"application/json",
+          "Content-Type":"application/json",
+        },
+        body:JSON.stringify({
+          address ,
+          coinNumber ,
+        })
+      })
+    }
+    catch(e){
+      console.log(e)
+    }
+  }
+
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setModalVisible(true);
@@ -74,16 +94,31 @@ function QRscan() {
             <View style={styles.modalView}>
              
               <Text style={styles.modalText}> 아래 주소로 송금하시겠습니까? </Text>
-              <Text style={styles.modalText}>{address}</Text>
-              <Text style={styles.modalText}> 보내는 금액 </Text>
-              <Text style={styles.modalText}>{coinNumber}</Text>
-              <TouchableHighlight
-                style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}>
-                <Text style={styles.textStyle}> 전 송 </Text>
-              </TouchableHighlight>
+              <Text style={styles.modalText, {marginBottom: 50}}>{address}</Text>
+
+              <View style={{flex:0.1, flexDirection:"row",alignItems:"center",marginBottom: 50}}>
+                <Text style={styles.modalTextCoin}> 보내는 금액 : </Text>
+                <Text style={styles.modalTextCoin}>{coinNumber} coin</Text>
+              </View>
+
+              <View style={{flex:0.01, flexDirection:"row",alignItems:"center"}}>
+                <TouchableHighlight
+                  style={{ ...styles.openButton, backgroundColor: "#ff8ac2" }}
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                    sendData()
+                  }}>
+                  <Text style={styles.textStyle}> 전 송 </Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                  style={{ ...styles.openButton, backgroundColor: "#e3e3e3" }}
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                  }}>
+                  <Text style={styles.textStyle}> 취 소 </Text>
+                </TouchableHighlight>
+              </View>
+              
             </View>
           </View>
         </Modal>
@@ -150,6 +185,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    marginHorizontal: 10,
+    
   },
   textStyle: {
     color: 'white',
@@ -160,6 +197,11 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+  },
+  modalTextCoin: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 20
   },
 });
 
