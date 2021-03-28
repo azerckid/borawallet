@@ -1,3 +1,17 @@
-//  로그인 로그 아웃
-// 사인업 하면 서버로 부터 주소 받아 오기
-// 송금 내역 보내기
+import axios from "axios"
+
+const instance = axios.create({
+    baseURL:"https://reqres.in/api",
+})
+
+// const fetchData=async()=>{
+//     const request = await axios.get(fetchUrl,{
+//       params:{
+//         ID: 12345,
+//         password : 12345,
+//       }
+//     })
+//     alert(JSON.stringify(request.data.data[0].avatar))
+//     console.log(request.data)
+
+export default instance;
