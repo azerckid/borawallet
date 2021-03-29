@@ -33,7 +33,7 @@ const QRgen = ({ navigation }) => {
       });
 
       // alert(JSON.stringify(request.data.data[0].avatar))
-      console.log(request.data);
+      // console.log(request.data);
       setAddress("0x9C2D26b8889348ca869D9e9F6298D11bbA88876B");
     };
     fetchData();

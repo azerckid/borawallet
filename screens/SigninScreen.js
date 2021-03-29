@@ -5,51 +5,63 @@ import firebase from "../firebase/fire";
 import CryptoJS from "crypto-js";
 
 const SigninScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("vericras@kakao.com");
+  const [password, setPassword] = useState("!1q2w3e4r");
   const [error, setError] = useState("");
 
-  // const encrypted = CryptoJS.AES.encrypt(
-  //   CryptoJS.enc.Utf8.parse(email),
-  //   CryptoJS.enc.Hex.parse("kby2DdaFOs7BRIRGmNBOSwqHgp9AgCOV"),
-  //   {
-  //     iv: CryptoJS.enc.Hex.parse(String.fromCharCode(0).repeat(16)),
-  //   }
-  // );
-  // const final = encrypted.ciphertext.toString(CryptoJS.enc.Base64);
-
-  // console.log(final);
-
+  // encription
   var encrypted = CryptoJS.AES.encrypt(
-    CryptoJS.enc.Utf8.parse("zizimoos@banco.id"),
+    CryptoJS.enc.Utf8.parse(email),
     CryptoJS.enc.Utf8.parse("kby2DdaFOs7BRIRGmNBOSwqHgp9AgCOV"),
     {
       iv: CryptoJS.enc.Hex.parse(String.fromCharCode(0).repeat(16)),
     }
   );
-  console.log("enc", encrypted.ciphertext.toString(CryptoJS.enc.Base64));
+  const encEmail = encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+  console.log("encEmail", encEmail);
 
-  var decrypted = CryptoJS.AES.decrypt(
+  var encryptedp = CryptoJS.AES.encrypt(
+    CryptoJS.enc.Utf8.parse(password),
+    CryptoJS.enc.Utf8.parse("kby2DdaFOs7BRIRGmNBOSwqHgp9AgCOV"),
+    {
+      iv: CryptoJS.enc.Hex.parse(String.fromCharCode(0).repeat(16)),
+    }
+  );
+  const encPassword = encryptedp.ciphertext.toString(CryptoJS.enc.Base64);
+  console.log("encPassword", encPassword);
+
+  // decription
+  var decryptede = CryptoJS.AES.decrypt(
     encrypted.ciphertext.toString(CryptoJS.enc.Base64),
     CryptoJS.enc.Utf8.parse("kby2DdaFOs7BRIRGmNBOSwqHgp9AgCOV"),
     {
       iv: CryptoJS.enc.Hex.parse(String.fromCharCode(0).repeat(16)),
     }
   );
-  console.log(decrypted.toString(CryptoJS.enc.Utf8));
+  console.log(decryptede.toString(CryptoJS.enc.Utf8));
+
+  var decryptedp = CryptoJS.AES.decrypt(
+    encryptedp.ciphertext.toString(CryptoJS.enc.Base64),
+    CryptoJS.enc.Utf8.parse("kby2DdaFOs7BRIRGmNBOSwqHgp9AgCOV"),
+    {
+      iv: CryptoJS.enc.Hex.parse(String.fromCharCode(0).repeat(16)),
+    }
+  );
+  console.log(decryptedp.toString(CryptoJS.enc.Utf8));
 
   const sendData = async () => {
     try {
-      await fetch("https://webhook.site/bfef764a-08c9-4678-b1bb-67458dbebc1d", {
+      await fetch("http://crm.borabit.com/v1/user/get_user_info_login", {
         method: "post",
         mode: "no-cors",
         Headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Auth-Key": "LrMgyJaOG8pYK2PbRoqZvlcXSxWe95wF",
         },
         body: JSON.stringify({
-          email,
-          password,
+          email: encEmail,
+          password: encPassword,
         }),
       });
     } catch (e) {
@@ -61,9 +73,7 @@ const SigninScreen = ({ navigation }) => {
 
   const signIn = async () => {
     try {
-      const response = await firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password);
+      sendData();
       navigation.navigate("Tabs");
     } catch (err) {
       setError(err.message);
