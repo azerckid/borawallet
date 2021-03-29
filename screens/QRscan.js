@@ -12,13 +12,13 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 
 function QRscan() {
   const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
+  const [scanned, setScanned] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
-  const [scandata, setScandata] = useState("")
-  
-  const char = scandata.split('|')
-  const address = char[0]
-  const coinNumber = char[1]
+  const [scandata, setScandata] = useState("");
+
+  const char = scandata.split("|");
+  const address = char[0];
+  const coinNumber = char[1];
 
   useEffect(() => {
     (async () => {
@@ -27,31 +27,30 @@ function QRscan() {
     })();
   }, []);
 
-  const sendData = async() => {
-    try{
-      await fetch("https://webhook.site/bfef764a-08c9-4678-b1bb-67458dbebc1d",{
-        method:"post",
-        mode:"no-cors",
-        Headers:{
-          "Accept":"application/json",
-          "Content-Type":"application/json",
+  const sendData = async () => {
+    try {
+      await fetch("https://webhook.site/bfef764a-08c9-4678-b1bb-67458dbebc1d", {
+        method: "post",
+        mode: "no-cors",
+        Headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-        body:JSON.stringify({
-          address ,
-          coinNumber ,
-        })
-      })
+        body: JSON.stringify({
+          address,
+          coinNumber,
+        }),
+      });
+    } catch (e) {
+      console.log(e);
     }
-    catch(e){
-      console.log(e)
-    }
-  }
+  };
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setModalVisible(true);
-    console.log(type)
-    setScandata(data)
+    console.log(type);
+    setScandata(data);
     // alert(`${data}`);
   };
 
@@ -81,32 +80,47 @@ function QRscan() {
           </TouchableOpacity>
         )}
       </View>
-      
+
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
+            Alert.alert("Modal has been closed.");
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-             
-              <Text style={styles.modalText}> 아래 주소로 송금하시겠습니까? </Text>
-              <Text style={styles.modalText, {marginBottom: 50}}>{address}</Text>
+              <Text style={styles.modalText}>
+                {" "}
+                아래 주소로 송금하시겠습니까?{" "}
+              </Text>
+              <Text style={(styles.modalText, { marginBottom: 50 })}>
+                {address}
+              </Text>
 
-              <View style={{flex:0.1, flexDirection:"row",alignItems:"center",marginBottom: 50}}>
+              <View
+                style={{
+                  flex: 0.1,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginBottom: 50,
+                }}>
                 <Text style={styles.modalTextCoin}> 보내는 금액 : </Text>
                 <Text style={styles.modalTextCoin}>{coinNumber} coin</Text>
               </View>
 
-              <View style={{flex:0.01, flexDirection:"row",alignItems:"center"}}>
+              <View
+                style={{
+                  flex: 0.01,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}>
                 <TouchableHighlight
                   style={{ ...styles.openButton, backgroundColor: "#ff8ac2" }}
                   onPress={() => {
                     setModalVisible(!modalVisible);
-                    sendData()
+                    sendData();
                   }}>
                   <Text style={styles.textStyle}> 전 송 </Text>
                 </TouchableHighlight>
@@ -118,18 +132,16 @@ function QRscan() {
                   <Text style={styles.textStyle}> 취 소 </Text>
                 </TouchableHighlight>
               </View>
-              
             </View>
           </View>
         </Modal>
-
-        <TouchableHighlight
+        {/* <TouchableHighlight
           style={styles.openButton}
           onPress={() => {
             setModalVisible(true);
           }}>
           <Text style={styles.textStyle}>Show Modal</Text>
-        </TouchableHighlight>
+        </TouchableHighlight> */}
       </View>
     </View>
   );
@@ -142,7 +154,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     backgroundColor: "#fff",
   },
-  barCodeView: {                                    
+  barCodeView: {
     width: "100%",
     height: "100%",
     marginBottom: 40,
@@ -161,17 +173,17 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 22,
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 10,
     padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -181,27 +193,26 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   openButton: {
-    backgroundColor: '#F194FF',
+    backgroundColor: "#F194FF",
     borderRadius: 20,
     padding: 10,
     elevation: 2,
     marginHorizontal: 10,
-    
   },
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
     paddingHorizontal: 10,
   },
   modalText: {
     marginBottom: 15,
-    textAlign: 'center',
+    textAlign: "center",
   },
   modalTextCoin: {
     marginBottom: 15,
-    textAlign: 'center',
-    fontSize: 20
+    textAlign: "center",
+    fontSize: 20,
   },
 });
 

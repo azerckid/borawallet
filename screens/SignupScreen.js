@@ -13,7 +13,10 @@ const SignupScreen = ({ navigation }) => {
       const response = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
-      navigation.navigate("Signin");
+      console.log(response);
+      alert("sign Up successfully");
+      navigation.navigate("SignIn");
+      // 계정 만들기 API
     } catch (err) {
       setError(err.message);
     }
@@ -45,6 +48,18 @@ const SignupScreen = ({ navigation }) => {
           paddingLeft: 10,
         }}
       />
+      <Input
+        // label="Password"
+        value={password}
+        placeholder="password one more"
+        onChangeText={setPassword}
+        secureTextEntry
+        style={{
+          // backgroundColor: "#e3e3e3",
+          // borderRadius: 30,
+          paddingLeft: 10,
+        }}
+      />
 
       {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
 
@@ -52,7 +67,7 @@ const SignupScreen = ({ navigation }) => {
         <Text style={styles.button}>Sign Up</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
-        <Text style={styles.message}>Already have an account? Sign In</Text>
+        <Text style={{ marginTop: 20 }}>Already have an account? Sign In</Text>
       </TouchableOpacity>
     </View>
   );
