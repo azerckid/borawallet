@@ -8,13 +8,13 @@ import {
   Platform,
 } from "react-native";
 import QRCode from "react-native-qrcode-svg";
-import axios from "../api";
+import { instance } from "../api";
 
 const fetchUrl = "/users";
 
 const QRgen = ({ navigation }) => {
   const [address, setAddress] = useState("");
-  const [text, setText] = useState();
+  const [text, setText] = useState("0");
   const [error, setError] = useState("");
   //const address = "0x9C2D26b8889348ca869D9e9F6298D11bbA88876B"
 
@@ -25,7 +25,7 @@ const QRgen = ({ navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       console.log("action");
-      const request = await axios.get(fetchUrl, {
+      const request = await instance.get(fetchUrl, {
         params: {
           ID: 12345,
           password: 12345,
@@ -39,6 +39,13 @@ const QRgen = ({ navigation }) => {
     fetchData();
   }, [text]);
 
+  let requestedPrice;
+  const Numberfy = parseInt(text);
+  requestedPrice = Numberfy.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  console.log("requestedPrice", requestedPrice);
+
+  console.log(typeof requestedPrice);
+
   let keyboardName =
     Platform.OS === "android" ? "numeric" : "numbers-and-punctuation";
   console.log(Platform.OS);
@@ -48,25 +55,59 @@ const QRgen = ({ navigation }) => {
         flex: 1,
         justifyContent: "flex-start",
         alignItems: "center",
-        backgroundColor: "white",
+        backgroundColor: "#ededed",
       }}>
-      <Text style={{ marginTop: 30, marginBottom: 10 }}>
-        전송받을 코인의 갯수를 입력하세요.
-      </Text>
-      <TextInput
-        style={styles.coinInput}
-        placeholder="전송받을 코인 갯수"
-        keyboardType={keyboardName}
-        onChangeText={(text) => setText(text)}
-        defaultValue={text}
-      />
+      <View
+        style={{
+          flexDirection: "column",
+          paddingHorizontal: 30,
+          paddingVertical: 10,
+          marginTop: 10,
+          marginBottom: 20,
+          backgroundColor: "#3e4a85",
+          borderRadius: 10,
+        }}>
+        <Text
+          style={{
+            marginTop: 10,
+            marginBottom: 10,
+            color: "white",
+            fontSize: 18,
+            textAlign: "center",
+          }}>
+          Request Amount
+        </Text>
+        <TextInput
+          style={styles.coinInput}
+          placeholder="Please enter the requested amount"
+          keyboardType={keyboardName}
+          onChangeText={(text) => setText(text)}
+          defaultValue={text}
+        />
+      </View>
+      <View
+        style={{
+          alignItems: "center",
+          backgroundColor: "white",
+          borderRadius: 10,
+          paddingVertical: 40,
+          paddingHorizontal: 65,
+          marginBottom: 10,
+        }}>
+        <Text style={{ marginTop: -20, fontSize: 22, textAlign: "center" }}>
+          Requested Coin
+        </Text>
+        <Text style={{ marginBottom: 15, fontSize: 18 }}>
+          {requestedPrice} coin
+        </Text>
+        {address ? (
+          <QRCode
+            value={address + "|" + text}
+            size={200}
+            color="#3e4a85"></QRCode>
+        ) : null}
+      </View>
 
-      {address ? (
-        <QRCode value={address + "|" + text} size={200}></QRCode>
-      ) : null}
-      <Text style={{ marginTop: 10 }}>
-        전송받을 코인의 갯수가 {text}개 입니다.
-      </Text>
       {/* <Text style={{marginTop:10}}>전송받을 주소는</Text>
       <Text style={{marginTop:0}}>[{address}]</Text> */}
     </View>
@@ -76,12 +117,13 @@ const QRgen = ({ navigation }) => {
 const styles = StyleSheet.create({
   coinInput: {
     height: 40,
-    marginTop: 0,
-    marginBottom: 50,
-    fontSize: 18,
+    marginTop: 10,
+    marginBottom: 20,
+    fontSize: 16,
     backgroundColor: "#efe8ff",
-    borderRadius: 30,
-    paddingHorizontal: 20,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    textAlign: "center",
   },
 });
 

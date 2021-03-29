@@ -2,11 +2,12 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useLayoutEffect } from "react";
 import QRgen from "../screens/QRgen";
 import QRscan from "../screens/QRscan";
-import Upbit from "../screens/Upbit";
+import TransationCredit from "../screens/TransactionCredit";
 import Home from "../screens/Home";
 
 const Tabs = createBottomTabNavigator();
@@ -38,10 +39,10 @@ export default ({ navigation, route }) => {
                 color={focused ? "white" : "grey"}
               />
             );
-          } else if (route.name === "Setting") {
+          } else if (route.name === "TransationCredit") {
             return (
-              <AntDesign
-                name="setting"
+              <MaterialIcons
+                name="transform"
                 size={28}
                 color={focused ? "white" : "grey"}
               />
@@ -66,7 +67,9 @@ export default ({ navigation, route }) => {
       <Tabs.Screen name="Home" component={Home}></Tabs.Screen>
       <Tabs.Screen name="QR Code Generator" component={QRgen}></Tabs.Screen>
       <Tabs.Screen name="QR Code Scan" component={QRscan}></Tabs.Screen>
-      <Tabs.Screen name="Setting" component={Upbit}></Tabs.Screen>
+      <Tabs.Screen
+        name="TransationCredit"
+        component={TransationCredit}></Tabs.Screen>
     </Tabs.Navigator>
   );
 };

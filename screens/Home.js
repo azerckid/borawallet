@@ -1,69 +1,109 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity} from "react-native";
-import {Clipboard} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Clipboard } from "react-native";
 import QRCode from "react-native-qrcode-svg";
-import { FontAwesome } from '@expo/vector-icons';
-import axios from "../api"
+import { FontAwesome } from "@expo/vector-icons";
+import { instance } from "../api";
 
-const fetchUrl = "/users"
+const fetchUrl = "/users";
 
 export default ({ navigation }) => {
-  const [address, setAddress] = useState("")
-  const [copiedText, setCopiedText] = useState("")
+  const [address, setAddress] = useState("");
+  const [copiedText, setCopiedText] = useState("");
 
-  const copyToClipboard = async() => {
+  const copyToClipboard = async () => {
     await Clipboard.setString(address);
-    alert(address)
+    alert(address);
   };
 
   const fetchCopiedText = async () => {
     const text = await Clipboard.getString();
     setCopiedText(text);
-    alert(copiedText)
-    
+    alert(copiedText);
   };
 
-  useEffect(()=>{
-    const fetchData=async()=>{
-      const request = await axios.get(fetchUrl,{
-        params:{
+  useEffect(() => {
+    const fetchData = async () => {
+      const request = await instance.get(fetchUrl, {
+        params: {
           ID: 12345,
-          password : 12345,
-        }
-      })
-      alert(JSON.stringify(request.data.data[0].avatar))
-      console.log(request.data)
-      setAddress("0x9C2D26b8889348ca869D9e9F6298D11bbA88876B")
-    }
-    fetchData()
-  },[address]);
+          password: 12345,
+        },
+      });
+      alert(JSON.stringify(request.data.data[0].avatar));
+      // console.log(request.data);
+      setAddress("0x9C2D26b8889348ca869D9e9F6298D11bbA88876B");
+    };
+    fetchData();
+  }, [address]);
 
   return (
-    <View style={{ backgroundColor: "white", padding: 10, flex: 1 }}>
+    <View
+      style={{
+        backgroundColor: "#ededed",
+        padding: 10,
+        justifyContent: "flex-start",
+      }}>
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-          marginTop: 20,
+          flexDirection: "column",
+          paddingHorizontal: 10,
+          paddingVertical: 10,
+          marginBottom: 10,
+          backgroundColor: "#3e4a85",
+          borderRadius: 10,
         }}>
-        {/* <Image style={styles.logo} source={require("../assets/ddmcoin.png")} />       */}
-      </View>
-      <View style={{flexDirection:"row", justifyContent:"center",alignItems:"center", paddingHorizontal: 80, marginBottom: 20}}>
-        <Text style={{flex:0.7, fontSize:14, marginRight: 30}}>
-          {address}
+        <Text
+          style={{
+            fontSize: 18,
+            color: "white",
+            textAlign: "center",
+            marginTop: 15,
+          }}>
+          Your Wallet Account
         </Text>
-        <TouchableOpacity onPress={fetchCopiedText} style={{flex:0.3}}>
-          <Text style={{marginBottom: 5}}>copy</Text>
-          <FontAwesome name="copy" size={32} color="black" />
-        </TouchableOpacity> 
-      </View>  
-       
 
-      <View style={{alignItems:"center"}}>
-        {address ? <QRCode value={address} size={200}></QRCode> : null}
+        <View style={{ justifyContent: "flex-start", marginVertical: 20 }}>
+          <Text style={{ fontSize: 15, paddingLeft: 5, color: "white" }}>
+            Total amount :
+          </Text>
+          <Text style={{ fontSize: 15, paddingLeft: 5, color: "white" }}>
+            Order amount :
+          </Text>
+          <Text style={{ fontSize: 15, paddingLeft: 5, color: "white" }}>
+            Withdraw amout :
+          </Text>
+          <Text style={{ fontSize: 15, paddingLeft: 5, color: "white" }}>
+            LockUp amout :
+          </Text>
+        </View>
+        <TouchableOpacity
+          onPress={fetchCopiedText}
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 15,
+          }}>
+          <Text style={{ fontSize: 12, paddingTop: 5, color: "white" }}>
+            {address}
+          </Text>
+          <FontAwesome name="copy" size={18} color="white" />
+        </TouchableOpacity>
       </View>
-      
-      
+
+      <View
+        style={{
+          alignItems: "center",
+          backgroundColor: "white",
+          borderRadius: 10,
+          paddingVertical: 50,
+          marginBottom: 10,
+        }}>
+        {address ? (
+          <QRCode value={address} size={200} color="#3e4a85"></QRCode>
+        ) : null}
+      </View>
     </View>
   );
 };
