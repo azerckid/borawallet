@@ -1,43 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Clipboard } from "react-native";
-import QRCode from "react-native-qrcode-svg";
-import { FontAwesome } from "@expo/vector-icons";
-import { instance } from "../api";
-
-const fetchUrl = "/users";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 export default ({ navigation }) => {
-  const [address, setAddress] = useState("");
-  const [copiedText, setCopiedText] = useState("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const request = await instance.get(fetchUrl, {
-        params: {
-          ID: 12345,
-          password: 12345,
-        },
-      });
-
-      setAddress("0x9C2D26b8889348ca869D9e9F6298D11bbA88876B");
-    };
-    fetchData();
-  }, [address]);
-
-  const copyToClipboard = async () => {
-    await Clipboard.setString(address);
-    alert(address);
-  };
-
-  const fetchCopiedText = async () => {
-    const text = await Clipboard.getString();
-    setCopiedText(text);
-    alert(copiedText);
-  };
-
-  useEffect(() => {}, []);
-
   return (
     <View
       style={{
@@ -61,9 +25,11 @@ export default ({ navigation }) => {
           <Text style={{ fontSize: 13, paddingLeft: 5, paddingTop: 5 }}>
             {address}
           </Text>
-          <Text style={{ fontSize: 15, paddingLeft: 5 }}>잔액 :</Text>
-          <Text style={{ fontSize: 15, paddingLeft: 5 }}>잔액 :</Text>
-          <Text style={{ fontSize: 15, paddingLeft: 5 }}>잔액 :</Text>
+          <Text style={{ fontSize: 15, paddingLeft: 5 }}>송금날짜 :</Text>
+          <Text style={{ fontSize: 15, paddingLeft: 5 }}>송금금액 :</Text>
+          <Text style={{ fontSize: 15, paddingLeft: 5 }}>입금날짜 :</Text>
+          <Text style={{ fontSize: 15, paddingLeft: 5 }}>입금금액 :</Text>
+          <Text style={{ fontSize: 15, paddingLeft: 5 }}>잔여금액 :</Text>
           <Text style={{ fontSize: 13, paddingLeft: 5, paddingTop: 5 }}>
             {address}
           </Text>

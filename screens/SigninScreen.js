@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { TouchableOpacity, StyleSheet, View, Image } from "react-native";
 import { Input, Text } from "react-native-elements";
-import firebase from "../firebase/fire";
 import CryptoJS from "crypto-js";
 
 const SigninScreen = ({ navigation }) => {
@@ -29,7 +28,7 @@ const SigninScreen = ({ navigation }) => {
   );
   const encPassword = encryptedp.ciphertext.toString(CryptoJS.enc.Base64);
   console.log("encPassword", encPassword);
-
+  // encription End
   // decription
   var decryptede = CryptoJS.AES.decrypt(
     encrypted.ciphertext.toString(CryptoJS.enc.Base64),
@@ -48,7 +47,7 @@ const SigninScreen = ({ navigation }) => {
     }
   );
   console.log(decryptedp.toString(CryptoJS.enc.Utf8));
-
+  // decription End
   const sendData = async () => {
     try {
       await fetch("http://crm.borabit.com/v1/user/get_user_info_login", {
@@ -68,8 +67,6 @@ const SigninScreen = ({ navigation }) => {
       console.log(e);
     }
   };
-
-  sendData();
 
   const signIn = async () => {
     try {

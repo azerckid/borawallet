@@ -4,26 +4,40 @@ import { ActivityIndicator, Dimensions, View } from "react-native";
 import Swiper from "react-native-web-swiper";
 import styled from "styled-components/native";
 import Slide from "../../components/Movies/Slide";
-import Title from "../../components/Title";
 import { ScrollView } from "react-native";
 import Vertical from "../../components/Vertical";
 import Horizontal from "../../components/Horiziontal";
 import ScrollContainer from "../../components/ScrollContainer";
 import Transaction from "../../components/Transaction";
+import { instance } from "../../api";
+
+
+const fetchUrl = "/users";
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
-
 const SliderContainer = styled.View`
   width: 100%;
   height: ${HEIGHT / 4}px;
   margin-bottom: 5px;
 `;
-
 const Container = styled.View``;
 
-const UpcomingContainer = styled.View``;
-
 export default ({ refreshFn, loading, upcoming }) => {
+  const [address, setAddress] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      const request = await instance.get(fetchUrl, {
+        params: {
+          ID: 12345,
+          password: 12345,
+        },
+      });
+      console.log(JSON.stringify(request.data.data[0].avatar))
+      setAddress("0x9C2D26b8889348ca869D9e9F6298D11bbA88876B");
+    };
+    fetchData();
+  }, [address]);
+
   return (
     <ScrollContainer
       refreshFn={refreshFn}
@@ -32,29 +46,16 @@ export default ({ refreshFn, loading, upcoming }) => {
         backgroundColor: "#3e4a85",
       }}
       contentContainerStyle={{
-        // flex: loading ? 1 : "auto",
         justifyContent: loading ? "center" : "flex-start",
       }}>
       {loading ? (
         <ActivityIndicator />
       ) : (
-        <>
-          <UpcomingContainer>
+          <Container>
             {upcoming.map((movie) => (
-              <>
-                <Transaction></Transaction>
-                {/* <Horizontal
-                  key={movie.id}
-                  id={movie.id}
-                  title={movie.original_title}
-                  votes={movie.vote_average}
-                  releaseDate={movie.release_date}
-                  poster={movie.poster_path}
-                  overview={movie.overview}></Horizontal> */}
-              </>
+              <Transaction></Transaction>
             ))}
-          </UpcomingContainer>
-        </>
+          </Container>   
       )}
     </ScrollContainer>
   );
