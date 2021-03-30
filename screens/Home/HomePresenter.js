@@ -113,7 +113,7 @@ export default ({ refreshFn, loading,navigation }) => {
                     onPress={fetchCopiedText}
                     style={{
                         flexDirection: "row",
-                        justifyContent: "space-between",
+                        justifyContent: "space-around",
                         alignItems: "center",
                         marginBottom: 15,
                     }}>
