@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-export default ({ navigation }) => {
+export default ({ navigation, address }) => {
   return (
     <View
       style={{

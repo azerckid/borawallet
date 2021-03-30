@@ -53,7 +53,7 @@ export default ({ refreshFn, loading, upcoming }) => {
       ) : (
           <Container>
             {upcoming.map((movie) => (
-              <Transaction></Transaction>
+              <Transaction address={address}></Transaction>
             ))}
           </Container>   
       )}
