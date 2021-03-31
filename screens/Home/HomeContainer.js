@@ -1,5 +1,5 @@
 import * as React from "react";
-import { movieApi } from "../../api";
+import { coinApi, movieApi } from "../../api";
 import HomePresenter from "./HomePresenter";
 
 export default () => {
@@ -28,13 +28,25 @@ export default () => {
     });
   };
 
+  const [allMarket, setAllMarket] = React.useState([]);
+  const getAllMarket = async () => {
+    const allMarkets = await coinApi.allMarket();
+    setAllMarket(allMarkets);
+    console.log("allMarkets", allMarket);
+  };
+
+  const [coinPrice, setCoinPrice] = React.useState();
+  const getCoinPrice = async () => {
+    const getcoinPrice = await coinApi.coinPrice();
+    setCoinPrice(getcoinPrice);
+  };
+
   React.useEffect(() => {
     getData();
+    getAllMarket();
+    getCoinPrice();
+    console.log("coinPrice :", coinPrice);
   }, []);
 
-  return (
-    <HomePresenter
-      refreshFn={getData}
-      {...movies}></HomePresenter>
-  );
+  return <HomePresenter refreshFn={getData} {...movies}></HomePresenter>;
 };

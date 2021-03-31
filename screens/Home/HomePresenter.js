@@ -14,6 +14,8 @@ import Vertical from "../../components/Vertical";
 import Horizontal from "../../components/Horiziontal";
 import ScrollContainer from "../../components/ScrollContainer";
 import Transaction from "../../components/Transaction";
+import AddressCard from "../../components/AddressCard";
+import fetch from "node-fetch";
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
@@ -25,32 +27,34 @@ const SliderContainer = styled.View`
 
 const Container = styled.View``;
 
-const fetchUrl = "/users";
+// const fetchUrl = "/users";
+// const url = "https://api.upbit.com/v1/ticker?markets=KRW-BTC";
+// const options = { method: "GET" };
 
-export default ({ refreshFn, loading,navigation }) => {
+// fetch(url, options)
+//   .then((res) => res.json())
+//   .then((json) => console.log("json..............", json))
+//   .catch((err) => console.error("error:" + err));
+
+const fetchCopiedText = async () => {
+  const text = await Clipboard.getString();
+  setCopiedText(text);
+  alert(copiedText);
+};
+
+export default ({ refreshFn, loading, nowPlaying, navigation }) => {
   const [address, setAddress] = useState("");
   const [copiedText, setCopiedText] = useState("");
 
-  const copyToClipboard = async () => {
-    await Clipboard.setString(address);
-    alert(address);
-  };
-
-  const fetchCopiedText = async () => {
-    const text = await Clipboard.getString();
-    setCopiedText(text);
-    alert(copiedText);
-  };
-
   useEffect(() => {
     const fetchData = async () => {
-      const request = await instance.get(fetchUrl, {
-        params: {
-          ID: 12345,
-          password: 12345,
-        },
-      });
-      alert(JSON.stringify(request.data.data[0].avatar));
+      // const request = await instance.get(fetchUrl, {
+      //   params: {
+      //     ID: 12345,
+      //     password: 12345,
+      //   },
+      // });
+      // alert(JSON.stringify(request.data.data[0].avatar));
       // console.log(request.data);
       setAddress("0x9C2D26b8889348ca869D9e9F6298D11bbA88876B");
     };
@@ -59,97 +63,69 @@ export default ({ refreshFn, loading,navigation }) => {
 
   return (
     <ScrollContainer
-    refreshFn={refreshFn}
-    vertical
-    style={{
-      backgroundColor: "#3e4a85",
-    }}
-    contentContainerStyle={{
-      justifyContent: loading ? "center" : "flex-start",
-    }}>
-        {loading ? (
+      refreshFn={refreshFn}
+      vertical
+      style={{
+        backgroundColor: "#3e4a85",
+      }}
+      contentContainerStyle={{
+        justifyContent: loading ? "center" : "flex-start",
+      }}>
+      {loading ? (
         <ActivityIndicator />
-      ) : (        
-        <Container>            
+      ) : (
+        <>
+          <SliderContainer>
+            <Swiper loop timeout={3} controlsEnabled={false}>
+              {nowPlaying.map((movie) => (
+                <Slide
+                  key={movie.id}
+                  id={movie.id}
+                  title={movie.original_title}
+                  overview={movie.overview}
+                  votes={movie.vote_average}
+                  backgroundImage={movie.backdrop_path}
+                  poster={movie.poster_path}
+                />
+              ))}
+            </Swiper>
+          </SliderContainer>
+          <Container>
             <View
-            style={{
+              style={{
                 backgroundColor: "#ededed",
                 padding: 10,
                 justifyContent: "flex-start",
-            }}>
-                <View
-                    style={{
-                    flexDirection: "column",
-                    paddingHorizontal: 10,
-                    paddingVertical: 10,
-                    marginBottom: 10,
-                    backgroundColor: "#3e4a85",
-                    borderRadius: 10,
-                    }}>
-                    <Text
-                    style={{
-                        fontSize: 18,
-                        color: "white",
-                        textAlign: "center",
-                        marginTop: 15,
-                    }}>
-                        Your Wallet Account
-                    </Text>
-                    <View style={{ justifyContent: "flex-start", marginVertical: 20 }}>
-                        <Text style={{ fontSize: 15, paddingLeft: 5, color: "white" }}>
-                            Total amount :
-                        </Text>
-                        <Text style={{ fontSize: 15, paddingLeft: 5, color: "white" }}>
-                            Order amount :
-                        </Text>
-                        <Text style={{ fontSize: 15, paddingLeft: 5, color: "white" }}>
-                            Withdraw amout :
-                        </Text>
-                        <Text style={{ fontSize: 15, paddingLeft: 5, color: "white" }}>
-                            LockUp amout :
-                        </Text>
-                    </View>
-                    <TouchableOpacity
-                    onPress={fetchCopiedText}
-                    style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around",
-                        alignItems: "center",
-                        marginBottom: 15,
-                    }}>
-                        <Text style={{ fontSize: 12, paddingTop: 5, color: "white" }}>
-                            {address}
-                        </Text>
-                        <FontAwesome name="copy" size={18} color="white" />
-                    </TouchableOpacity>
-                </View>
-                <View
-                    style={{
-                    alignItems: "center",
-                    backgroundColor: "white",
-                    borderRadius: 10,
-                    paddingVertical: 50,
-                    marginBottom: 10,
-                    }}>
-                    {address ? (
-                    <QRCode value={address} size={200} color="#3e4a85"></QRCode>
-                    ) : null}
-                </View>
-                <View
-                    style={{
-                    alignItems: "center",
-                    backgroundColor: "white",
-                    borderRadius: 10,
-                    paddingVertical: 50,
-                    marginBottom: 10,
-                    }}>
-                    {address ? (
-                    <QRCode value={address} size={200} color="#3e4a85"></QRCode>
-                    ) : null}
-                </View>
-            </View>            
-        </Container>     
-      )}      
+              }}>
+              <AddressCard address={address}></AddressCard>
+              <View
+                style={{
+                  alignItems: "center",
+                  backgroundColor: "white",
+                  borderRadius: 10,
+                  paddingVertical: 50,
+                  marginBottom: 10,
+                }}>
+                {address ? (
+                  <QRCode value={address} size={200} color="#3e4a85"></QRCode>
+                ) : null}
+              </View>
+              <View
+                style={{
+                  alignItems: "center",
+                  backgroundColor: "white",
+                  borderRadius: 10,
+                  paddingVertical: 50,
+                  marginBottom: 10,
+                }}>
+                {address ? (
+                  <QRCode value={address} size={200} color="#3e4a85"></QRCode>
+                ) : null}
+              </View>
+            </View>
+          </Container>
+        </>
+      )}
     </ScrollContainer>
   );
 };

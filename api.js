@@ -14,6 +14,43 @@ export const instance = axios.create({
 //     alert(JSON.stringify(request.data.data[0].avatar))
 //     console.log(request.data)
 
+const upbitPrice = (params) =>
+  axios.get(`https://api.upbit.com/v1/ticker`, {
+    params: {
+      ...params,
+    },
+  });
+
+const coinList = async () => {
+  try {
+    const { data: market } = await axios.get(
+      `https://api.upbit.com/v1/market/all`
+    );
+    console.log(market);
+  } catch (e) {
+    console.log(e);
+    return [null, e];
+  }
+};
+
+const getCoinPrice = async (params = {}) => {
+  try {
+    const { data } = await upbitPrice(params);
+    console.log("data", data[0].opening_price);
+
+    return data[0].opening_price;
+  } catch (e) {
+    console.log(e);
+    return [null, e];
+  }
+};
+
+export const coinApi = {
+  allMarket: () => coinList(),
+  coinPrice: () => getCoinPrice({ markets: "KRW-BTC" }),
+};
+
+// movie
 const TBMB_KEY = "c39f66305cb6bd411613ca999ce32f56";
 
 const makeRequest = (path, params) =>

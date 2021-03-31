@@ -4,6 +4,7 @@ import { CardStyleInterpolators } from "@react-navigation/stack";
 import Search from "../screens/Search";
 import SignupScreen from "../screens/SignupScreen";
 import SigninScreen from "../screens/SigninScreen";
+import Detail from "../screens/Detail";
 
 import Tabs from "./Tabs";
 // import { Modal } from "react-native";
@@ -32,6 +33,7 @@ export default () => (
       options={{ headerTransparent: true }}></Stack.Screen>
     <Stack.Screen name="SignUp" component={SignupScreen}></Stack.Screen>
     <Stack.Screen name="Tabs" component={Tabs}></Stack.Screen>
+    <Stack.Screen name="Detail" component={Detail}></Stack.Screen>
     <Stack.Screen name="Search" component={Search}></Stack.Screen>
   </Stack.Navigator>
 );
