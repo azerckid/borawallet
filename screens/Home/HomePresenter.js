@@ -16,6 +16,34 @@ import ScrollContainer from "../../components/ScrollContainer";
 import Transaction from "../../components/Transaction";
 import AddressCard from "../../components/AddressCard";
 import fetch from "node-fetch";
+import Dount from "../../components/DonutChart"
+
+const data =[
+  {
+    percentage:90,
+    color:"#3e4a85",
+    max:100,
+    // radius:150,
+    strokeWidth: 10
+    },
+  {
+  percentage:8,
+  color:"tomato",
+  max:10,
+  },
+  {
+  percentage:14,
+  color:"skyblue",
+  max:20,
+  },
+  {
+  percentage:92,
+  color:"gold",
+  max:100,
+  },
+  
+]
+
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
@@ -95,9 +123,23 @@ export default ({ refreshFn, loading, nowPlaying, navigation }) => {
               style={{
                 backgroundColor: "#ededed",
                 padding: 10,
-                justifyContent: "flex-start",
+                justifyContent: "center",
               }}>
               <AddressCard address={address}></AddressCard>
+              <View style={{flexDirection:"row",justifyContent: "space-evenly", flexWrap:"wrap", alignItems:"center"}}>
+                {data.map((p,i)=>{
+                  return <Dount 
+                  key={i} 
+                  percentage={p.percentage} 
+                  color={p.color} 
+                  delay={1000} 
+                  max={p.max}
+                  radius={p.radius}
+                  strokeWidth={p.strokeWidth}>
+                  </Dount>
+                })}
+                
+              </View>
               <View
                 style={{
                   alignItems: "center",
@@ -124,6 +166,7 @@ export default ({ refreshFn, loading, nowPlaying, navigation }) => {
               </View>
             </View>
           </Container>
+          
         </>
       )}
     </ScrollContainer>

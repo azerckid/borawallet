@@ -113,6 +113,9 @@ const SigninScreen = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
         <Text style={{ marginTop: 20 }}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+        <Text style={{ marginTop: 20 }}>Search</Text>
+      </TouchableOpacity>
     </View>
   );
 };
