@@ -101,7 +101,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <StatusBar hidden />
+      {/* <StatusBar hidden /> */}
       <Animated.FlatList
         ref={ref}
         data={data}

@@ -52,8 +52,8 @@ export default ({ refreshFn, loading, upcoming }) => {
         <ActivityIndicator />
       ) : (
           <Container>
-            {upcoming.map((movie) => (
-              <Transaction address={address}></Transaction>
+            {upcoming.map((movie,i) => (
+              <Transaction key={i} address={address}></Transaction>
             ))}
           </Container>   
       )}

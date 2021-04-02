@@ -5,7 +5,7 @@ import * as Network from "expo-network";
 const email = "vericras@kakao.com";
 const password = "!1q2w3e4r";
 
-const ip = await Network.getIpAddressAsync();
+
 
 var encrypted = CryptoJS.AES.encrypt(
   CryptoJS.enc.Utf8.parse(email),
@@ -27,17 +27,9 @@ var encryptedp = CryptoJS.AES.encrypt(
 const encPassword = encryptedp.ciphertext.toString(CryptoJS.enc.Base64);
 console.log("encPassword", encPassword);
 
-const instance = axios.create({
-  baseURL: "http://crm.borabit.com/v1/user/get_user_info_login",
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "Auth-Key": "LrMgyJaOG8pYK2PbRoqZvlcXSxWe95wF",
-  },
-  timeout: 1000,
-});
 
-const boraLoginInfo = () =>
+
+const boraLoginInfo = (ip) =>
   axios.get(`http://crm.borabit.com/v1/user/get_user_info_login`, {
     headers: {
       Accept: "application/json",
@@ -53,8 +45,10 @@ const boraLoginInfo = () =>
 
 const getLoginInfo = async () => {
   try {
-    await boraLoginInfo().then((response) => {
-      console.log(response);
+    const ip = await Network.getIpAddressAsync();
+    console.log(ip)
+    await boraLoginInfo(ip).then((response) => {
+      console.log("response",response);
     });
 
     return data;

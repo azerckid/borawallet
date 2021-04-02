@@ -20,20 +20,22 @@ export default () => (
       cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       headerStyle: {
         backgroundColor: "#5234bf",
+        
         // height: 50,
       },
       headerTitleAlign: "center",
       headerTintColor: "white",
       headerBackTitleVisible: false,
       gestureEnabled: true,
+      headerShown: true
     }}>
     <Stack.Screen
       name="SignIn"
       component={SigninScreen}
-      options={{ headerTransparent: true }}></Stack.Screen>
-    <Stack.Screen name="SignUp" component={SignupScreen}></Stack.Screen>
-    <Stack.Screen name="Tabs" component={Tabs}></Stack.Screen>
+      options={{ headerShown: false }}></Stack.Screen>
+    <Stack.Screen name="SignUp" component={SignupScreen} options={{ headerShown: false }}></Stack.Screen>
+    <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
     <Stack.Screen name="Detail" component={Detail}></Stack.Screen>
-    <Stack.Screen name="Search" component={Search}></Stack.Screen>
+    <Stack.Screen name="Search" component={Search} options={{ headerShown: false }}></Stack.Screen>
   </Stack.Navigator>
 );

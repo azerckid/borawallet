@@ -86,14 +86,14 @@ const Slide = ({
     <Container>
       <BGImage resizeMode="cover" source={{ uri: apiImage(backgroundImage) }} />
       <Content>
-        <Poster url={poster}></Poster>
+        {/* <Poster url={poster}></Poster> */}
         <Data>
           <Title>{title.slice(0, 20)}</Title>
-          <VotesContainer>
+          {/* <VotesContainer>
             <Votes votes={votes}></Votes>
-          </VotesContainer>
+          </VotesContainer> */}
 
-          <Overview>{overview.slice(0, 100)}...</Overview>
+          {/* <Overview>{overview.slice(0, 100)}...</Overview> */}
           <TouchableOpacity onPress={goToDetail}>
             <DetailButton>
               <DetailText style={{ color: "white" }}> View Detail </DetailText>
@@ -103,15 +103,6 @@ const Slide = ({
       </Content>
     </Container>
   );
-};
-
-Slide.propTypes = {
-  id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  backgroundImage: PropTypes.string,
-  votes: PropTypes.number.isRequired,
-  overview: PropTypes.string.isRequired,
-  poster: PropTypes.string.isRequired,
 };
 
 export default Slide;

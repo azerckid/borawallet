@@ -9,6 +9,7 @@ import QRgen from "../screens/QRgen";
 import QRscan from "../screens/QRscan";
 import TransationCredit from "../screens/TransactionCredit";
 import Home from "../screens/Home";
+import TopTabTransaction from "../screens/TopTabTransaction"
 
 const Tabs = createBottomTabNavigator();
 
@@ -39,7 +40,7 @@ export default ({ navigation, route }) => {
                 color={focused ? "white" : "grey"}
               />
             );
-          } else if (route.name === "TransationCredit") {
+          } else if (route.name === "TopTabTransaction") {
             return (
               <MaterialIcons
                 name="transform"
@@ -64,12 +65,12 @@ export default ({ navigation, route }) => {
           backgroundColor: "#5234bf",
         },
       }}>
-      <Tabs.Screen name="Home" component={Home}></Tabs.Screen>
+      <Tabs.Screen name="Home" component={Home} ></Tabs.Screen>
       <Tabs.Screen name="QR Code Generator" component={QRgen}></Tabs.Screen>
       <Tabs.Screen name="QR Code Scan" component={QRscan}></Tabs.Screen>
       <Tabs.Screen
-        name="TransationCredit"
-        component={TransationCredit}></Tabs.Screen>
+        name="TopTabTransaction"
+        component={TopTabTransaction}></Tabs.Screen>
     </Tabs.Navigator>
   );
 };

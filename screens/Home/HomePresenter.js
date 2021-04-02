@@ -49,20 +49,20 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
 const SliderContainer = styled.View`
   width: 100%;
-  height: ${HEIGHT / 4}px;
+  height: ${HEIGHT / 9}px;
   margin-bottom: 5px;
 `;
 
 const Container = styled.View``;
 
-// const fetchUrl = "/users";
-// const url = "https://api.upbit.com/v1/ticker?markets=KRW-BTC";
-// const options = { method: "GET" };
 
-// fetch(url, options)
-//   .then((res) => res.json())
-//   .then((json) => console.log("json..............", json))
-//   .catch((err) => console.error("error:" + err));
+const url = "https://api.upbit.com/v1/ticker?markets=KRW-BTC";
+const options = { method: "GET" };
+
+fetch(url, options)
+  .then((res) => res.json())
+  .then((json) => console.log("json..............", json))
+  .catch((err) => console.error("error:" + err));
 
 const fetchCopiedText = async () => {
   const text = await Clipboard.getString();
@@ -76,14 +76,6 @@ export default ({ refreshFn, loading, nowPlaying, navigation }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // const request = await instance.get(fetchUrl, {
-      //   params: {
-      //     ID: 12345,
-      //     password: 12345,
-      //   },
-      // });
-      // alert(JSON.stringify(request.data.data[0].avatar));
-      // console.log(request.data);
       setAddress("0x9C2D26b8889348ca869D9e9F6298D11bbA88876B");
     };
     fetchData();
@@ -109,11 +101,8 @@ export default ({ refreshFn, loading, nowPlaying, navigation }) => {
                 <Slide
                   key={movie.id}
                   id={movie.id}
-                  title={movie.original_title}
-                  overview={movie.overview}
-                  votes={movie.vote_average}
-                  backgroundImage={movie.backdrop_path}
-                  poster={movie.poster_path}
+                  title={movie.original_title}            
+                  backgroundImage={movie.backdrop_path}    
                 />
               ))}
             </Swiper>
@@ -121,8 +110,8 @@ export default ({ refreshFn, loading, nowPlaying, navigation }) => {
           <Container>
             <View
               style={{
-                backgroundColor: "#ededed",
-                padding: 10,
+                backgroundColor: "black",
+                padding: 2,
                 justifyContent: "center",
               }}>
               <AddressCard address={address}></AddressCard>
@@ -146,11 +135,9 @@ export default ({ refreshFn, loading, nowPlaying, navigation }) => {
                   backgroundColor: "white",
                   borderRadius: 10,
                   paddingVertical: 50,
-                  marginBottom: 10,
+                  marginVertical: 20
                 }}>
-                {address ? (
-                  <QRCode value={address} size={200} color="#3e4a85"></QRCode>
-                ) : null}
+            
               </View>
               <View
                 style={{
