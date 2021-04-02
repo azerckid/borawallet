@@ -1,6 +1,7 @@
 import * as React from "react";
 import { coinApi, movieApi } from "../../api";
 import HomePresenter from "./HomePresenter";
+import { loginApi } from "../../apiBoraWallet";
 
 export default () => {
   const [movies, setMovies] = React.useState({
@@ -41,11 +42,19 @@ export default () => {
     setCoinPrice(getcoinPrice);
   };
 
+  const [loginInfo, setLoginInfo] = React.useState();
+  const getLoginInfo = async () => {
+    const loginInfo = await loginApi.getLoginInfo();
+    setLoginInfo(loginInfo);
+  };
+
   React.useEffect(() => {
     getData();
-    getAllMarket();
-    getCoinPrice();
-    console.log("coinPrice :", coinPrice);
+    // getAllMarket();
+    // getCoinPrice();
+    getLoginInfo();
+    console.log(loginInfo);
+    // console.log("coinPrice :", coinPrice);
   }, []);
 
   return <HomePresenter refreshFn={getData} {...movies}></HomePresenter>;
