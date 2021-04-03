@@ -23,18 +23,21 @@ export default () => (
         
         // height: 50,
       },
+      headerTitle:null,
       headerTitleAlign: "center",
       headerTintColor: "white",
       headerBackTitleVisible: false,
-      gestureEnabled: true,
-      headerShown: true
+      gestureEnabled: false,
+      headerShown: true,
+      headerTransparent: true,
+      headerLeft: null
     }}>
     <Stack.Screen
       name="SignIn"
       component={SigninScreen}
       options={{ headerShown: false }}></Stack.Screen>
     <Stack.Screen name="SignUp" component={SignupScreen} options={{ headerShown: false }}></Stack.Screen>
-    <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }}></Stack.Screen>
+    <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: true }}></Stack.Screen>
     <Stack.Screen name="Detail" component={Detail}></Stack.Screen>
     <Stack.Screen name="Search" component={Search} options={{ headerShown: false }}></Stack.Screen>
   </Stack.Navigator>

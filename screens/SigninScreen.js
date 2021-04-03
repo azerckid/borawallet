@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { TouchableOpacity, StyleSheet, View, Image } from "react-native";
 import { Input, Text } from "react-native-elements";
 import CryptoJS from "crypto-js";
+import * as Network from "expo-network";
 
 const SigninScreen = ({ navigation }) => {
   const [email, setEmail] = useState("vericras@kakao.com");
+  // const [email, setEmail] = useState("zizimoos@banco.id");
   const [password, setPassword] = useState("!1q2w3e4r");
   const [error, setError] = useState("");
 
@@ -48,25 +50,40 @@ const SigninScreen = ({ navigation }) => {
   );
   console.log(decryptedp.toString(CryptoJS.enc.Utf8));
   // decription End
-  const sendData = async () => {
-    try {
-      await fetch("http://crm.borabit.com/v1/user/get_user_info_login", {
-        method: "post",
-        mode: "no-cors",
-        Headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Auth-Key": "LrMgyJaOG8pYK2PbRoqZvlcXSxWe95wF",
-        },
-        body: JSON.stringify({
+
+  const ip = "192.168.23.5"
+
+  const sendData = async () => {   
+      console.log(ip)
+      console.log("before success")
+      
+
+      const url = "https://jsonplaceholder.typicode.com/post/1"
+      const requestOptions={
           email: encEmail,
           password: encPassword,
-        }),
-      });
-    } catch (e) {
-      console.log(e);
-    }
+          device_ip:ip
+        }
+
+        fetch(url, {
+          method: 'POST',
+          // headers: {
+          //   Accept: 'application/json',
+          //   'Content-Type': 'application/json',
+          //   // "Auth-Key": "LrMgyJaOG8pYK2PbRoqZvlcXSxWe95wF",
+          // },
+          // body: JSON.stringify(requestOptions),
+        }).then(response => response.json())
+        .then(responseJson => {console.log(responseJson)})
+        .catch(error=>{console.log(error)});
+
+      console.log("after success")
+   
   };
+
+
+
+
 
   const signIn = async () => {
     try {
