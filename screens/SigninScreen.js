@@ -3,6 +3,7 @@ import { TouchableOpacity, StyleSheet, View, Image } from "react-native";
 import { Input, Text } from "react-native-elements";
 import CryptoJS from "crypto-js";
 import * as Network from "expo-network";
+import * as Device from 'expo-device';
 import fetch from "node-fetch";
 
 const SigninScreen = ({ navigation }) => {
@@ -53,8 +54,10 @@ const SigninScreen = ({ navigation }) => {
 
 
   const sendData = async () => { 
-    const ip = await Network.getIpAddressAsync();  
+    const ip = await Network.getIpAddressAsync(); 
+    const device_info = Device.osName;
     console.log(ip)
+    console.log("device_info",device_info)
     const url = "http://crm.borabit.com/v1/user/get_user_info_login";
     console.log("before success");
     const requestOptions={
@@ -79,9 +82,9 @@ const SigninScreen = ({ navigation }) => {
     const upurl = "https://api.upbit.com/v1/ticker?markets=KRW-BTC";
     const options = { method: "GET" };
     fetch(upurl, options)
-      .then((res) => res.json())
-      .then((json) => console.log("json..............", json))
-      .catch((err) => console.error("error:" + err));
+    .then((res) => res.json())
+    .then((json) => console.log("json..............", json))
+    .catch((err) => console.error("error:" + err));
 ///////////////////////////////////////////////////////////////////
     fetch("https://webhook.site/bfef764a-08c9-4678-b1bb-67458dbebc1d", {
       method: "post",
