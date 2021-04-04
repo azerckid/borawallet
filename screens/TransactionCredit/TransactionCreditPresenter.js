@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Dimensions, View } from "react-native";
+import { ActivityIndicator, Dimensions, View, FlatList } from "react-native";
 import Swiper from "react-native-web-swiper";
 import styled from "styled-components/native";
 import Slide from "../../components/Movies/Slide";
@@ -51,7 +51,7 @@ export default ({ refreshFn, loading, upcoming }) => {
       {loading ? (
         <ActivityIndicator />
       ) : (
-          <Container>
+          <Container style={{flex: 1, backgroundColor:"#fff"}}>
             {upcoming.map((movie,i) => (
               <Transaction key={i} address={address}></Transaction>
             ))}

@@ -29,18 +29,18 @@ function QRscan() {
 
   const sendData = async () => {
     try {
-      await fetch("https://webhook.site/bfef764a-08c9-4678-b1bb-67458dbebc1d", {
-        method: "post",
-        mode: "no-cors",
-        Headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          address,
-          coinNumber,
-        }),
-      });
+      // await fetch("https://webhook.site/bfef764a-08c9-4678-b1bb-67458dbebc1d", {
+      //   method: "post",
+      //   mode: "no-cors",
+      //   Headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     address,
+      //     coinNumber,
+      //   }),
+      // });
     } catch (e) {
       console.log(e);
     }

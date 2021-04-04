@@ -3,10 +3,10 @@ import { TouchableOpacity, StyleSheet, View, Image } from "react-native";
 import { Input, Text } from "react-native-elements";
 import CryptoJS from "crypto-js";
 import * as Network from "expo-network";
+import fetch from "node-fetch";
 
 const SigninScreen = ({ navigation }) => {
   const [email, setEmail] = useState("vericras@kakao.com");
-  // const [email, setEmail] = useState("zizimoos@banco.id");
   const [password, setPassword] = useState("!1q2w3e4r");
   const [error, setError] = useState("");
 
@@ -51,39 +51,54 @@ const SigninScreen = ({ navigation }) => {
   console.log(decryptedp.toString(CryptoJS.enc.Utf8));
   // decription End
 
-  const ip = "192.168.23.5"
 
-  const sendData = async () => {   
-      console.log(ip)
-      console.log("before success")
-      
+  const sendData = async () => { 
+    const ip = await Network.getIpAddressAsync();  
+    console.log(ip)
+    const url = "http://crm.borabit.com/v1/user/get_user_info_login";
+    console.log("before success");
+    const requestOptions={
+        email: encEmail,
+        password: encPassword,
+        device_ip:ip
+      }
 
-      const url = "https://jsonplaceholder.typicode.com/post/1"
-      const requestOptions={
-          email: encEmail,
-          password: encPassword,
-          device_ip:ip
-        }
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        "Auth-Key": "LrMgyJaOG8pYK2PbRoqZvlcXSxWe95wF",
+        },
+      body: JSON.stringify(requestOptions),
+      })
+      .then((res) => console.log("login....", res.ok, typeof res, JSON.stringify(res)))
+      .then((data) => console.log("login..............", data))
+      .catch((err) => console.error("error:" + err));
+////////////////////////////////////////////////////////////////////
+    const upurl = "https://api.upbit.com/v1/ticker?markets=KRW-BTC";
+    const options = { method: "GET" };
+    fetch(upurl, options)
+      .then((res) => res.json())
+      .then((json) => console.log("json..............", json))
+      .catch((err) => console.error("error:" + err));
+///////////////////////////////////////////////////////////////////
+    fetch("https://webhook.site/bfef764a-08c9-4678-b1bb-67458dbebc1d", {
+      method: "post",
+      mode: "no-cors",
+      Headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        address: "address1234567890",
+        coinNumber: "9999999",
+      }),
+    }).then((res) => console.log("test",res.ok, JSON.stringify(res)))
+    .catch((err) => console.error("error:" + err));
 
-        fetch(url, {
-          method: 'POST',
-          // headers: {
-          //   Accept: 'application/json',
-          //   'Content-Type': 'application/json',
-          //   // "Auth-Key": "LrMgyJaOG8pYK2PbRoqZvlcXSxWe95wF",
-          // },
-          // body: JSON.stringify(requestOptions),
-        }).then(response => response.json())
-        .then(responseJson => {console.log(responseJson)})
-        .catch(error=>{console.log(error)});
-
-      console.log("after success")
-   
+    console.log("after success")
   };
-
-
-
-
 
   const signIn = async () => {
     try {

@@ -51,19 +51,18 @@ const SliderContainer = styled.View`
   width: 100%;
   height: ${HEIGHT / 9}px;
   margin-bottom: 5px;
-  margin-top: 50px;
+  margin-top: 1px;
 `;
 
 const Container = styled.View``;
 
+// const url = "https://api.upbit.com/v1/ticker?markets=KRW-BTC";
+// const options = { method: "GET" };
 
-const url = "https://api.upbit.com/v1/ticker?markets=KRW-BTC";
-const options = { method: "GET" };
-
-fetch(url, options)
-  .then((res) => res.json())
-  .then((json) => console.log("json..............", json))
-  .catch((err) => console.error("error:" + err));
+// fetch(url, options)
+//   .then((res) => res.json())
+//   .then((json) => console.log("json..............", json))
+//   .catch((err) => console.error("error:" + err));
 
 const fetchCopiedText = async () => {
   const text = await Clipboard.getString();

@@ -10,6 +10,7 @@ import QRscan from "../screens/QRscan";
 import TransationCredit from "../screens/TransactionCredit";
 import Home from "../screens/Home";
 import TopTabTransaction from "../screens/TopTabTransaction"
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Tabs = createBottomTabNavigator();
 
@@ -22,9 +23,16 @@ export default ({ navigation, route }) => {
 
   return (
     <Tabs.Navigator
+      initialRouteName="Home"
+      tabBarOptions={{
+        showLabel: false,
+        style: {
+          backgroundColor: "#5234bf",
+        },
+      }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
-          if (route.name === "QR Code Generator") {
+          if (route.name === "QR Generator") {
             return (
               <MaterialCommunityIcons
                 name="qrcode"
@@ -32,7 +40,7 @@ export default ({ navigation, route }) => {
                 color={focused ? "white" : "grey"}
               />
             );
-          } else if (route.name === "QR Code Scan") {
+          } else if (route.name === "QR Scan") {
             return (
               <MaterialCommunityIcons
                 name="qrcode-scan"
@@ -40,7 +48,7 @@ export default ({ navigation, route }) => {
                 color={focused ? "white" : "grey"}
               />
             );
-          } else if (route.name === "TopTabTransaction") {
+          } else if (route.name === "Transaction") {
             return (
               <MaterialIcons
                 name="transform"
@@ -59,17 +67,12 @@ export default ({ navigation, route }) => {
           }
         },
       })}
-      tabBarOptions={{
-        showLabel: false,
-        style: {
-          backgroundColor: "#5234bf",
-        },
-      }}>
+      >
       <Tabs.Screen name="Home" component={Home} ></Tabs.Screen>
-      <Tabs.Screen name="QR Code Generator" component={QRgen}></Tabs.Screen>
-      <Tabs.Screen name="QR Code Scan" component={QRscan}></Tabs.Screen>
+      <Tabs.Screen name="QR Generator" component={QRgen}></Tabs.Screen>
+      <Tabs.Screen name="QR Scan" component={QRscan}></Tabs.Screen>
       <Tabs.Screen
-        name="TopTabTransaction"
+        name="Transaction"
         component={TopTabTransaction}></Tabs.Screen>
     </Tabs.Navigator>
   );
