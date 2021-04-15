@@ -44,7 +44,7 @@ const getCoinPrice = async (params = {}) => {
     return [null, e];
   }
 };
-
+//what the fuck
 export const coinApi = {
   allMarket: () => coinList(),
   coinPrice: () => getCoinPrice({ markets: "KRW-BTC" }),
